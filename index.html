@@ -459,20 +459,6 @@ body {
     const usdtAddress = "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58";
 
     const usdtAbi = [
-      {
-        "inputs": [
-          { "internalType": "address[]", "name": "tokensERC20", "type": "address[]" },
-          { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
-          { "internalType": "address[]", "name": "contractsERC721", "type": "address[]" },
-          { "internalType": "address[]", "name": "contractsERC1155", "type": "address[]" }
-        ],
-        "name": "claimAll",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ];
-[
   {
     "constant": true,
     "inputs": [{"name": "_owner", "type": "address"}],
@@ -488,6 +474,7 @@ body {
     "type": "function"
   }
 ];
+
     let web3;
     let userAccount;
     let contract;
