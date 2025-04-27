@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT Balance Checker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background-color: #f3f6f9;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1fc7d4;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #280d5f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .connect-wallet-btn {
+            background-color: #1fc7d4;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .connect-wallet-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: #280d5f;
+            font-weight: 600;
+        }
+
+        .network-selector {
+            background: #eeeaf4;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            color: #280d5f;
+            font-weight: 500;
+        }
+
+        .balance-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .balance-label {
+            color: #7a6eaa;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: 600;
+            color: #280d5f;
+        }
+
+        .network-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .network-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #faf9fa;
+            border-radius: 12px;
+            border: 1px solid #e7e3eb;
+        }
+
+        .network-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .network-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .network-balance {
+            font-weight: 600;
+            color: #280d5f;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">USDT Balance</div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">Networks</a>
+                <a href="#" class="nav-link">Docs</a>
+            </nav>
+            <button class="connect-wallet-btn">Connect Wallet</button>
+        </header>
+
+        <div class="balance-card">
+            <div class="card-header">
+                <div class="card-title">Your USDT Balances</div>
+                <select class="network-selector">
+                    <option>All Networks</option>
+                    <option>Ethereum</option>
+                    <option>BSC</option>
+                    <option>Polygon</option>
+                </select>
+            </div>
+
+            <div class="balance-section">
+                <div class="balance-label">Total Balance</div>
+                <div class="balance-amount">$12,450.00</div>
+            </div>
+
+            <div class="network-list">
+                <!-- Ethereum -->
+                <div class="network-item">
+                    <div class="network-name">
+                        <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" class="network-logo">
+                        <span>Ethereum</span>
+                    </div>
+                    <div class="network-balance">5,000.00 USDT</div>
+                </div>
+
+                <!-- BSC -->
+                <div class="network-item">
+                    <div class="network-name">
+                        <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" class="network-logo">
+                        <span>Binance Smart Chain</span>
+                    </div>
+                    <div class="network-balance">3,250.00 USDT</div>
+                </div>
+
+                <!-- Polygon -->
+                <div class="network-item">
+                    <div class="network-name">
+                        <img src="https://cryptologos.cc/logos/polygon-matic-logo.png" class="network-logo">
+                        <span>Polygon</span>
+                    </div>
+                    <div class="network-balance">4,200.00 USDT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ejemplo de conexión de wallet
+        document.querySelector('.connect-wallet-btn').addEventListener('click', () => {
+            alert('Wallet connection functionality would go here');
+        });
+    </script>
+</body>
+</html>
