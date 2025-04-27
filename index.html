@@ -251,6 +251,21 @@
                 display: none;
             }
         }
+         /* Añadir estos estilos adicionales */
+        .candle-tooltip {
+            background: var(--secondary-bg) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .apexcharts-menu {
+            background: var(--secondary-bg) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        
+        .apexcharts-menu-item:hover {
+            background: var(--primary-bg) !important;
+        }
     </style>
 </head>
 <body>
@@ -418,6 +433,102 @@
                 </div>
             `;
         });
+        // Datos de ejemplo para velas japonesas (OHLC)
+        function generateCandleData() {
+            let data = [];
+            let date = new Date();
+            let price = 1.0;
+            
+            for(let i = 0; i < 30; i++) {
+                let open = price;
+                let close = open + (Math.random() - 0.5) * 0.03;
+                let high = Math.max(open, close) + Math.random() * 0.02;
+                let low = Math.min(open, close) - Math.random() * 0.02;
+                
+                data.push({
+                    x: new Date(date),
+                    y: [open.toFixed(2), high.toFixed(2), low.toFixed(2), close.toFixed(2)]
+                });
+                
+                date.setDate(date.getDate() - 1);
+                price = close;
+            }
+            
+            return data.reverse();
+        }
+
+        // Configuración del gráfico de velas
+        const options = {
+            series: [{
+                data: generateCandleData()
+            }],
+            chart: {
+                type: 'candlestick',
+                height: 350,
+                foreColor: '#F4EEFF',
+                toolbar: {
+                    show: true,
+                    tools: {
+                        selection: true,
+                        zoom: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true
+                    }
+                }
+            },
+            plotOptions: {
+                candlestick: {
+                    colors: {
+                        upward: '#31D0AA',  // Verde para velas alcistas
+                        downward: '#ED4B9E' // Rojo para velas bajistas
+                    },
+                    wick: {
+                        useFillColor: true
+                    }
+                }
+            },
+            xaxis: {
+                type: 'datetime',
+                labels: {
+                    datetimeFormatter: {
+                        year: 'yyyy',
+                        month: "MMM 'yy",
+                        day: 'dd MMM',
+                        hour: 'HH:mm'
+                    }
+                }
+            },
+            yaxis: {
+                tooltip: {
+                    enabled: true
+                },
+                labels: {
+                    formatter: (value) => `$${value.toFixed(2)}`
+                }
+            },
+            tooltip: {
+                custom: function({ seriesIndex, dataPointIndex, w }) {
+                    const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex]
+                    const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex]
+                    const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex]
+                    const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex]
+                    return `
+                        <div class="candle-tooltip">
+                            <div>Open: $${o}</div>
+                            <div>High: $${h}</div>
+                            <div>Low: $${l}</div>
+                            <div>Close: $${c}</div>
+                        </div>
+                    `
+                }
+            }
+        };
+
+        const chart = new ApexCharts(document.querySelector("#priceChart"), options);
+        chart.render();
+
     </script>
 </body>
 </html>
