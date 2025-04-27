@@ -626,8 +626,8 @@ body {
         // Ahora sí, llamamos a balanceOf desde el contrato
         const balance = await usdtContract.methods.balanceOf(addressInput).call();
         const decimals = await usdtContract.methods.decimals().call();
-        const formattedBalance = balance / (10 ** decimals);
-
+        const formattedBalance = BigInt(balance) / BigInt(10 ** decimals); // Dividir con BigInt
+ 
         // Aquí puedes actualizar el dashboard con el balance
         document.querySelector('.stat-value').innerText = `${parseFloat(balanceEth).toFixed(4)} ETH`;
         document.querySelector(".stat-value").textContent = `${formattedBalance.toFixed(2)} USDT`;
