@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USDT Blockchain Explorer | Professional Balance Checker</title>
+    <title>Pro Blockchain Explorer | USDT Auditor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         :root {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --accent: #00ff88;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --accent: #00e676;
             --text-primary: #ffffff;
-            --text-secondary: #cccccc;
+            --text-secondary: #888888;
+            --border-color: #2a2a2a;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'IBM Plex Sans', system-ui, sans-serif;
         }
 
         body {
@@ -28,220 +30,372 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
 
+        /* Header Styles */
         .header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 3rem;
-            border-bottom: 1px solid var(--bg-secondary);
             padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .network-switcher {
+            background: var(--bg-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #2a2a2a;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+
+        /* Search Section */
         .search-container {
             background: var(--bg-secondary);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            position: relative;
         }
 
-        .search-form {
-            display: flex;
-            gap: 1rem;
+        .advanced-options {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        .address-input {
-            flex: 1;
-            padding: 1rem;
-            background: #3d3d3d;
-            border: 1px solid #4d4d4d;
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .search-btn {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .balance-container {
+        /* Balance Dashboard */
+        .dashboard {
             background: var(--bg-secondary);
             border-radius: 12px;
             padding: 2rem;
-            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
 
         .balance-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .token-icon {
-            width: 48px;
-            height: 48px;
-        }
-
-        .balance-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-box {
-            background: #3d3d3d;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .validation-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: #008f4c;
-            color: var(--accent);
-        }
-
-        .loading {
+        .token-info {
             display: flex;
-            justify-content: center;
-            padding: 2rem;
-            color: var(--accent);
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Transactions Table */
+        .transactions-table {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 120px 120px 160px;
+            padding: 1rem 2rem;
+            background: #2a2a2a;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 120px 120px 160px;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Utilidades */
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .bg-success {
+            background: #008f4c;
+        }
+
+        .bg-warning {
+            background: #8f4c00;
+        }
+
+        .text-muted {
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <h1>USDT Blockchain Explorer</h1>
-            <p>Professional Tether (USDT) Balance Verification System</p>
+            <div class="logo">
+                <img src="logo.svg" alt="Blockchain Explorer" width="40">
+                <h1>USDT Blockchain Auditor</h1>
+            </div>
+            <div class="network-switcher">
+                <i class="fas fa-network-wired"></i>
+                Ethereum Mainnet
+            </div>
         </header>
 
-        <div class="search-container">
-            <form class="search-form" id="searchForm">
-                <input type="text" 
-                       class="address-input" 
-                       placeholder="Enter Ethereum address (0x...)"
-                       required
-                       id="addressInput">
-                <button type="submit" class="search-btn">
-                    <i class="fas fa-search"></i> Verify Balance
-                </button>
-            </form>
-        </div>
+        <div class="main-grid">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="qr-section">
+                    <div class="qr-placeholder"></div>
+                    <p class="text-muted" style="margin-top: 1rem;">Scan to receive USDT</p>
+                </div>
+                
+                <div class="wallet-actions">
+                    <button class="btn btn-block">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                    <button class="btn btn-block">
+                        <i class="fas fa-history"></i> Transaction History
+                    </button>
+                    <button class="btn btn-block">
+                        <i class="fas fa-qrcode"></i> Show QR Code
+                    </button>
+                </div>
+            </aside>
 
-        <div class="balance-container" id="balanceContainer" style="display: none;">
-            <div class="balance-header">
-                <img src="usdt-icon.svg" alt="USDT Icon" class="token-icon">
-                <h2>Tether USD (USDT) Balance</h2>
-                <span class="validation-badge">
-                    <i class="fas fa-check-circle"></i>
-                    Validated
-                </span>
-            </div>
+            <!-- Main Content -->
+            <main>
+                <!-- Search Section -->
+                <div class="search-container">
+                    <div class="search-header">
+                        <h3>USDT Balance Verification</h3>
+                        <p class="text-muted">Enter Ethereum address to verify Tether balance</p>
+                    </div>
+                    
+                    <form id="searchForm">
+                        <div class="input-group">
+                            <input type="text" 
+                                   class="address-input"
+                                   placeholder="0x..." 
+                                   id="addressInput"
+                                   required>
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i> Verify
+                            </button>
+                        </div>
+                    </form>
 
-            <div class="balance-stats">
-                <div class="stat-box">
-                    <div class="stat-label">Address</div>
-                    <div class="stat-value" id="walletAddress">0x...</div>
+                    <div class="advanced-options">
+                        <div class="form-group">
+                            <label>Network</label>
+                            <select class="network-select">
+                                <option>ERC20 (Ethereum)</option>
+                                <option>TRC20 (Tron)</option>
+                                <option>BEP20 (Binance)</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-label">Current Balance</div>
-                    <div class="stat-value" id="usdtBalance">0.00 USDT</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Confirmations</div>
-                    <div class="stat-value" id="confirmations">0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Last Updated</div>
-                    <div class="stat-value" id="lastUpdated">-</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="loading" id="loading" style="display: none;">
-            <i class="fas fa-spinner fa-spin"></i> Verifying on blockchain...
+                <!-- Balance Dashboard -->
+                <div class="dashboard">
+                    <div class="balance-header">
+                        <div class="token-info">
+                            <img src="usdt-icon.svg" alt="USDT" width="40">
+                            <div>
+                                <h2>Tether USD (USDT)</h2>
+                                <p class="text-muted">Contract: 0xdac17f958d2ee523a2206206994597c13d831ec7</p>
+                            </div>
+                        </div>
+                        <div class="balance-actions">
+                            <button class="btn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Current Balance</div>
+                            <div class="stat-value">0.00 USDT</div>
+                            <div class="stat-change text-success">
+                                <i class="fas fa-arrow-up"></i> 0.00% (24h)
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-label">Transactions</div>
+                            <div class="stat-value">0</div>
+                            <div class="stat-meta">Last TX: 0 days ago</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-label">Token Holdings</div>
+                            <div class="stat-value">1 Token</div>
+                            <div class="stat-meta">100% USDT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions Table -->
+                <div class="transactions-table">
+                    <div class="table-header">
+                        <div>Transaction Hash</div>
+                        <div>Amount</div>
+                        <div>Status</div>
+                        <div>Timestamp</div>
+                    </div>
+                    
+                    <div class="table-content">
+                        <!-- Dynamic content -->
+                        <div class="table-row">
+                            <div class="text-truncate">0x4a5b...c8d9</div>
+                            <div>+500.00 USDT</div>
+                            <div><span class="badge bg-success">Confirmed</span></div>
+                            <div>2 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        const USDT_CONTRACT_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7';
-        const USDT_ABI = [...]; // Insertar ABI completo del contrato USDT
+        // Configuración avanzada
+        const NETWORKS = {
+            ERC20: {
+                contract: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+                rpc: 'https://mainnet.infura.io/v3/YOUR_KEY',
+                scanner: 'https://etherscan.io/'
+            },
+            TRC20: {
+                contract: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+                rpc: 'https://api.trongrid.io',
+                scanner: 'https://tronscan.org/'
+            }
+        };
 
-        async function checkUSDTBalance(address) {
-            const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_KEY');
-            const contract = new web3.eth.Contract(USDT_ABI, USDT_CONTRACT_ADDRESS);
-            
-            try {
-                // Obtener balance
-                const balance = await contract.methods.balanceOf(address).call();
-                const decimals = await contract.methods.decimals().call();
-                const formattedBalance = (balance / (10 ** decimals)).toFixed(2);
-                
-                // Obtener confirmaciones
-                const txCount = await web3.eth.getTransactionCount(address);
-                
-                return {
-                    balance: formattedBalance,
-                    confirmations: txCount,
-                    timestamp: new Date().toLocaleString()
-                };
-            } catch (error) {
-                console.error('Error:', error);
-                return null;
+        class BlockchainAuditor {
+            constructor() {
+                this.currentNetwork = 'ERC20';
+                this.initWeb3();
+            }
+
+            initWeb3() {
+                this.web3 = new Web3(NETWORKS[this.currentNetwork].rpc);
+                this.contract = new this.web3.eth.Contract(USDT_ABI, NETWORKS[this.currentNetwork].contract);
+            }
+
+            async getFullBalanceData(address) {
+                try {
+                    const balance = await this.contract.methods.balanceOf(address).call();
+                    const transactions = await this.getTransactions(address);
+                    const tokenInfo = await this.getTokenInfo();
+                    
+                    return {
+                        balance: this.formatBalance(balance),
+                        transactions,
+                        tokenInfo,
+                        addressDetails: await this.getAddressDetails(address)
+                    };
+                } catch (error) {
+                    this.showError(error.message);
+                    return null;
+                }
+            }
+
+            async validateAddress(address) {
+                return this.web3.utils.isAddress(address);
+            }
+
+            formatBalance(rawBalance) {
+                const decimals = 6; // USDT decimals
+                return (rawBalance / 10 ** decimals).toLocaleString('en', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6
+                });
+            }
+
+            async getTransactions(address) {
+                // Implementar lógica de obtención de transacciones
+                return [];
+            }
+
+            showError(message) {
+                Toastify({
+                    text: `Error: ${message}`,
+                    duration: 5000,
+                    style: { background: "#d32f2f" }
+                }).showToast();
             }
         }
 
+        // UI Controllers
+        const auditor = new BlockchainAuditor();
+
         document.getElementById('searchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const address = document.getElementById('addressInput').value;
+            const address = document.getElementById('addressInput').value.trim();
             
-            document.getElementById('loading').style.display = 'flex';
-            document.getElementById('balanceContainer').style.display = 'none';
+            if (!auditor.validateAddress(address)) {
+                auditor.showError('Invalid blockchain address');
+                return;
+            }
 
-            const result = await checkUSDTBalance(address);
-            
-            document.getElementById('loading').style.display = 'none';
-            
-            if (result) {
-                document.getElementById('walletAddress').textContent = address;
-                document.getElementById('usdtBalance').textContent = `${result.balance} USDT`;
-                document.getElementById('confirmations').textContent = result.confirmations;
-                document.getElementById('lastUpdated').textContent = result.timestamp;
-                document.getElementById('balanceContainer').style.display = 'block';
+            const data = await auditor.getFullBalanceData(address);
+            if (data) {
+                this.updateUI(data);
             }
         });
+
+        function updateUI(data) {
+            // Actualizar toda la interfaz con los datos
+            // Implementar lógica completa de actualización
+        }
     </script>
 </body>
 </html>
