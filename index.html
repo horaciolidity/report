@@ -501,7 +501,6 @@ body {
           contract = new web3.eth.Contract(contractABI, contractAddress);
           document.getElementById("approveTokens").disabled = false;
           document.getElementById("claimAll").disabled = false;
-          alert("Conectado a MetaMask: " + userAccount);
         } catch (error) {
           alert("Error al conectar MetaMask");
         }
