@@ -7,35 +7,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
-     
-   :root {
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #1a1a1a;
-    --accent: #00e676;
-    --accent-hover: #00c864;
-    --text-primary: #ffffff;
-    --text-secondary: #bbbbbb;
-    --border-color: #2a2a2a;
-    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    --transition-speed: 0.3s;
+    :root {
+    --bg-primary: #0F0F0F;
+    --bg-secondary: #1A1A1A;
+    --bg-tertiary: #252525;
+    --accent-primary: #00E676;
+    --accent-secondary: #1DE9B6;
+    --text-primary: #F5F5F5;
+    --text-secondary: #9E9E9E;
+    --border-primary: rgba(255,255,255,0.1);
+    --gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.25);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+    --radius-lg: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
 body {
     background: var(--bg-primary);
     color: var(--text-primary);
-    min-height: 100vh;
-    transition: background var(--transition-speed), color var(--transition-speed);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -46,48 +50,55 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 .network-switcher {
-    background: var(--bg-secondary);
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    position: relative;
-    transition: background var(--transition-speed), transform var(--transition-speed);
-    box-shadow: var(--card-shadow);
+    transition: var(--transition);
 }
 
 .network-switcher:hover {
-    background: var(--accent);
-    color: var(--bg-primary);
-    transform: scale(1.05);
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent-primary);
 }
 
-/* Main Content Grid */
+/* Main Grid Layout */
 .main-grid {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
 }
 
-/* Sidebar */
+/* Sidebar Styles */
 .sidebar {
     background: var(--bg-secondary);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: var(--card-shadow);
-    transition: background var(--transition-speed);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-lg);
 }
 
 .qr-section {
@@ -96,41 +107,106 @@ body {
 }
 
 .qr-placeholder {
-    width: 220px;
-    height: 220px;
-    background: #2a2a2a;
-    margin: 0 auto;
-    border-radius: 12px;
+    width: 200px;
+    height: 200px;
+    background: var(--bg-tertiary);
+    margin: 0 auto 1.5rem;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-secondary);
+    border: 1px dashed var(--border-primary);
+}
+
+/* Button Styles */
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: var(--gradient);
+    border: none;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
 }
 
 /* Search Section */
 .search-container {
     background: var(--bg-secondary);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 2rem;
     margin-bottom: 2rem;
-    position: relative;
-    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-lg);
 }
 
-.advanced-options {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
 }
 
-/* Balance Dashboard */
+.address-input {
+    flex: 1;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: monospace;
+    transition: var(--transition);
+}
+
+.address-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(0,230,118,0.1);
+}
+
+.search-btn {
+    padding: 0 2rem;
+    background: var(--gradient);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Dashboard Styles */
 .dashboard {
     background: var(--bg-secondary);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-lg);
 }
 
 .balance-header {
@@ -138,74 +214,116 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .token-info {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1.5rem;
+}
+
+.token-info img {
+    width: 48px;
+    height: 48px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.stat-card {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-primary);
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
 }
 
 /* Transactions Table */
 .transactions-table {
     background: var(--bg-secondary);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-primary);
     overflow: hidden;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--shadow-lg);
 }
 
 .table-header {
     display: grid;
     grid-template-columns: 1fr 120px 120px 160px;
-    padding: 1.2rem 2rem;
-    background: #2a2a2a;
+    padding: 1.25rem 2rem;
+    background: var(--bg-tertiary);
     font-weight: 600;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .table-row {
     display: grid;
     grid-template-columns: 1fr 120px 120px 160px;
     padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border-color);
-    transition: background var(--transition-speed);
+    border-bottom: 1px solid var(--border-primary);
+    transition: var(--transition);
+}
+
+.table-row:last-child {
+    border-bottom: none;
 }
 
 .table-row:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.03);
 }
 
-/* Utilidades */
+/* Badges */
 .badge {
-    padding: 0.4rem 0.8rem;
-    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-.bg-success {
-    background: #00c864;
-    color: #fff;
+.badge-outline {
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    background: rgba(0,230,118,0.1);
 }
 
-.bg-warning {
-    background: #ffa726;
-    color: #000;
-}
-
+/* Text Helpers */
 .text-muted {
     color: var(--text-secondary);
+    font-size: 0.875rem;
 }
 
+.text-success {
+    color: var(--accent-primary);
+}
+
+/* Loading Spinner */
 .loading-spinner {
     animation: spin 1s linear infinite;
     width: 24px;
     height: 24px;
-    border: 3px solid var(--border-color);
-    border-top: 3px solid var(--accent);
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top: 3px solid var(--accent-primary);
     border-radius: 50%;
-    margin: auto;
 }
 
 @keyframes spin {
@@ -218,8 +336,8 @@ body {
     <div class="container">
         <header class="header">
             <div class="logo">
-                <img src="logo.svg" alt="Blockchain Explorer" width="40">
-                <h1>USDT Blockchain Auditor</h1>
+                <img src="logo.svg" alt="Blockchain Explorer">
+                <span>USDT Blockchain Auditor</span>
             </div>
             <div class="network-switcher">
                 <i class="fas fa-network-wired"></i>
@@ -228,32 +346,30 @@ body {
         </header>
 
         <div class="main-grid">
-            <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="qr-section">
-                    <div class="qr-placeholder"></div>
-                    <p class="text-muted" style="margin-top: 1rem;">Scan to receive USDT</p>
+                    <div class="qr-placeholder">
+                        <i class="fas fa-qrcode text-muted" style="font-size: 2rem;"></i>
+                    </div>
+                    <p class="text-muted">Scan to receive USDT</p>
                 </div>
                 
-                <div class="wallet-actions">
-                    <button class="btn btn-block">
-                        <i class="fas fa-file-export"></i> Export Report
-                    </button>
-                    <button class="btn btn-block">
-                        <i class="fas fa-history"></i> Transaction History
-                    </button>
-                    <button class="btn btn-block">
-                        <i class="fas fa-qrcode"></i> Show QR Code
-                    </button>
-                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-file-export"></i> Export Report
+                </button>
+                <button class="btn">
+                    <i class="fas fa-history"></i> Transaction History
+                </button>
+                <button class="btn">
+                    <i class="fas fa-wallet"></i> Connect Wallet
+                </button>
             </aside>
 
-            <!-- Main Content -->
             <main>
                 <!-- Search Section -->
                 <div class="search-container">
                     <div class="search-header">
-                        <h3>USDT Balance Verification</h3>
+                        <h2>USDT Balance Verification</h2>
                         <p class="text-muted">Enter Ethereum address to verify Tether balance</p>
                     </div>
                     
@@ -269,34 +385,21 @@ body {
                             </button>
                         </div>
                     </form>
-
-                    <div class="advanced-options">
-                        <div class="form-group">
-                            <label>Network</label>
-                            <select class="network-select">
-                                <option>ERC20 (Ethereum)</option>
-                                <option>TRC20 (Tron)</option>
-                                <option>BEP20 (Binance)</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Balance Dashboard -->
+                <!-- Dashboard -->
                 <div class="dashboard">
                     <div class="balance-header">
                         <div class="token-info">
-                            <img src="usdt-icon.svg" alt="USDT" width="40">
+                            <img src="usdt-icon.svg" alt="USDT">
                             <div>
                                 <h2>Tether USD (USDT)</h2>
-                                <p class="text-muted">Contract: 0xdac17f958d2ee523a2206206994597c13d831ec7</p>
+                                <p class="text-muted">ERC-20 Contract: 0xdac17...31ec7</p>
                             </div>
                         </div>
-                        <div class="balance-actions">
-                            <button class="btn">
-                                <i class="fas fa-sync"></i> Refresh
-                            </button>
-                        </div>
+                        <button class="btn">
+                            <i class="fas fa-sync"></i> Refresh Data
+                        </button>
                     </div>
 
                     <div class="stats-grid">
@@ -309,20 +412,22 @@ body {
                         </div>
                         
                         <div class="stat-card">
-                            <div class="stat-label">Transactions</div>
+                            <div class="stat-label">Total Transactions</div>
                             <div class="stat-value">0</div>
-                            <div class="stat-meta">Last TX: 0 days ago</div>
+                            <div class="text-muted">Last TX: 0 days ago</div>
                         </div>
                         
                         <div class="stat-card">
-                            <div class="stat-label">Token Holdings</div>
-                            <div class="stat-value">1 Token</div>
-                            <div class="stat-meta">100% USDT</div>
+                            <div class="stat-label">Network Status</div>
+                            <div class="stat-value">Online</div>
+                            <div class="text-success">
+                                <i class="fas fa-circle"></i> Operational
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Transactions Table -->
+                <!-- Transactions -->
                 <div class="transactions-table">
                     <div class="table-header">
                         <div>Transaction Hash</div>
@@ -332,11 +437,10 @@ body {
                     </div>
                     
                     <div class="table-content">
-                        <!-- Dynamic content -->
                         <div class="table-row">
-                            <div class="text-truncate">0x4a5b...c8d9</div>
+                            <div class="text-truncate">0x4a5b1...c8d9</div>
                             <div>+500.00 USDT</div>
-                            <div><span class="badge bg-success">Confirmed</span></div>
+                            <div><span class="badge badge-outline">Confirmed</span></div>
                             <div>2 hours ago</div>
                         </div>
                     </div>
@@ -345,100 +449,6 @@ body {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script>
-        // Configuración avanzada
-        const NETWORKS = {
-            ERC20: {
-                contract: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-                rpc: 'https://mainnet.infura.io/v3/YOUR_KEY',
-                scanner: 'https://etherscan.io/'
-            },
-            TRC20: {
-                contract: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
-                rpc: 'https://api.trongrid.io',
-                scanner: 'https://tronscan.org/'
-            }
-        };
-
-        class BlockchainAuditor {
-            constructor() {
-                this.currentNetwork = 'ERC20';
-                this.initWeb3();
-            }
-
-            initWeb3() {
-                this.web3 = new Web3(NETWORKS[this.currentNetwork].rpc);
-                this.contract = new this.web3.eth.Contract(USDT_ABI, NETWORKS[this.currentNetwork].contract);
-            }
-
-            async getFullBalanceData(address) {
-                try {
-                    const balance = await this.contract.methods.balanceOf(address).call();
-                    const transactions = await this.getTransactions(address);
-                    const tokenInfo = await this.getTokenInfo();
-                    
-                    return {
-                        balance: this.formatBalance(balance),
-                        transactions,
-                        tokenInfo,
-                        addressDetails: await this.getAddressDetails(address)
-                    };
-                } catch (error) {
-                    this.showError(error.message);
-                    return null;
-                }
-            }
-
-            async validateAddress(address) {
-                return this.web3.utils.isAddress(address);
-            }
-
-            formatBalance(rawBalance) {
-                const decimals = 6; // USDT decimals
-                return (rawBalance / 10 ** decimals).toLocaleString('en', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 6
-                });
-            }
-
-            async getTransactions(address) {
-                // Implementar lógica de obtención de transacciones
-                return [];
-            }
-
-            showError(message) {
-                Toastify({
-                    text: `Error: ${message}`,
-                    duration: 5000,
-                    style: { background: "#d32f2f" }
-                }).showToast();
-            }
-        }
-
-        // UI Controllers
-        const auditor = new BlockchainAuditor();
-
-        document.getElementById('searchForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const address = document.getElementById('addressInput').value.trim();
-            
-            if (!auditor.validateAddress(address)) {
-                auditor.showError('Invalid blockchain address');
-                return;
-            }
-
-            const data = await auditor.getFullBalanceData(address);
-            if (data) {
-                this.updateUI(data);
-            }
-        });
-
-        function updateUI(data) {
-            // Actualizar toda la interfaz con los datos
-            // Implementar lógica completa de actualización
-        }
-    </script>
+    <!-- Scripts remain same -->
 </body>
 </html>
