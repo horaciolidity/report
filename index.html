@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiChain USDT Report</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/apexcharts@latest/dist/apexcharts.css" rel="stylesheet">
+    <title>USDT Blockchain Explorer | Professional Balance Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-bg: #08060B;
-            --secondary-bg: #1F1B24;
-            --accent: #1FC7D4;
-            --text-primary: #F4EEFF;
-            --text-secondary: #9A6AFF;
-            --border-color: #383241;
-            --positive: #31D0AA;
-            --negative: #ED4B9E;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --accent: #00ff88;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background-color: var(--primary-bg);
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
         }
@@ -34,501 +30,218 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
         }
 
-        /* Header mejorado */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .nav-link:hover {
-            background: var(--secondary-bg);
-        }
-
-        .wallet-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .network-indicator {
-            background: var(--secondary-bg);
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .connect-wallet-btn {
-            background: linear-gradient(90deg, var(--accent) 0%, #3B2386 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 16px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        /* Tarjeta Principal */
-        .main-card {
-            background: var(--secondary-bg);
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .card-title {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .balance-overview {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .total-balance {
             text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--bg-secondary);
+            padding-bottom: 1.5rem;
         }
 
-        .balance-amount {
-            font-size: 36px;
-            font-weight: 600;
-            margin: 10px 0;
-            color: var(--accent);
-        }
-
-        .balance-change {
-            color: var(--positive);
-            font-size: 14px;
-        }
-
-        /* Lista de Redes */
-        .network-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .network-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background: var(--primary-bg);
+        .search-container {
+            background: var(--bg-secondary);
             border-radius: 12px;
-            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .address-input {
+            flex: 1;
+            padding: 1rem;
+            background: #3d3d3d;
+            border: 1px solid #4d4d4d;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .search-btn {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
             transition: transform 0.2s;
         }
 
-        .network-item:hover {
+        .search-btn:hover {
             transform: translateY(-2px);
         }
 
-        .network-info {
+        .balance-container {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .balance-header {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .network-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+        .token-icon {
+            width: 48px;
+            height: 48px;
         }
 
-        /* Sidebar */
-        .sidebar {
+        .balance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-box {
+            background: #3d3d3d;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .validation-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: #008f4c;
+            color: var(--accent);
+        }
+
+        .loading {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .portfolio-card {
-            background: var(--secondary-bg);
-            border-radius: 24px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .portfolio-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* Gráfico */
-        #priceChart {
-            height: 300px;
-            margin-top: 20px;
-        }
-
-        /* Tabla de Transacciones */
-        .tx-table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-        }
-
-        .tx-table th, .tx-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .tx-status {
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-        }
-
-        .status-success {
-            background: rgba(49, 208, 170, 0.1);
-            color: var(--positive);
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-        }
-         /* Añadir estos estilos adicionales */
-        .candle-tooltip {
-            background: var(--secondary-bg) !important;
-            border: 1px solid var(--border-color) !important;
-            color: var(--text-primary) !important;
-        }
-        
-        .apexcharts-menu {
-            background: var(--secondary-bg) !important;
-            border: 1px solid var(--border-color) !important;
-        }
-        
-        .apexcharts-menu-item:hover {
-            background: var(--primary-bg) !important;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <div class="logo">
-                <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" width="32">
-                USDT Report
-            </div>
-            <nav class="nav-links">
-                <a href="#" class="nav-link">Portfolio</a>
-                <a href="#" class="nav-link">Exchange</a>
-                <a href="#" class="nav-link">Analytics</a>
-                <div class="wallet-info">
-                    <div class="network-indicator">
-                        <div class="network-dot"></div>
-                        Ethereum
-                    </div>
-                    <button class="connect-wallet-btn" id="connectWalletBtn">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M13 3H3C2.44772 3 2 3.44772 2 4V12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12V4C14 3.44772 13.5523 3 13 3Z" stroke="currentColor" stroke-width="1.5"/>
-                            <path d="M11 6H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                        Connect Wallet
-                    </button>
-                    <button>Validar Saldo</button>
-                </div>
-            </nav>
+            <h1>USDT Blockchain Explorer</h1>
+            <p>Professional Tether (USDT) Balance Verification System</p>
         </header>
 
-        <div class="dashboard-grid">
-            <div class="main-card">
-                <div class="card-header">
-                    <h2 class="card-title">Multi-Chain Overview</h2>
-                    <select class="network-selector">
-                        <option>All Networks</option>
-                        <option>Ethereum</option>
-                        <option>BSC</option>
-                        <option>Polygon</option>
-                        <option>Avalanche</option>
-                    </select>
-                </div>
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <input type="text" 
+                       class="address-input" 
+                       placeholder="Enter Ethereum address (0x...)"
+                       required
+                       id="addressInput">
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Verify Balance
+                </button>
+            </form>
+        </div>
 
-                <div id="priceChart"></div>
-
-                <div class="network-list">
-                    <!-- Network Items dinámicos -->
-                </div>
-
-                <table class="tx-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Network</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2023-07-20 14:32</td>
-                            <td>Received</td>
-                            <td>+1,500.00 USDT</td>
-                            <td>Ethereum</td>
-                            <td><span class="tx-status status-success">Confirmed</span></td>
-                        </tr>
-                        <!-- Más transacciones -->
-                    </tbody>
-                </table>
+        <div class="balance-container" id="balanceContainer" style="display: none;">
+            <div class="balance-header">
+                <img src="usdt-icon.svg" alt="USDT Icon" class="token-icon">
+                <h2>Tether USD (USDT) Balance</h2>
+                <span class="validation-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Validated
+                </span>
             </div>
 
-            <div class="sidebar">
-                <div class="portfolio-card">
-                    <h3>Portfolio Allocation</h3>
-                    <div class="portfolio-item">
-                        <span>Ethereum</span>
-                        <span>45%</span>
-                    </div>
-                    <div class="portfolio-item">
-                        <span>BSC</span>
-                        <span>30%</span>
-                    </div>
-                    <div class="portfolio-item">
-                        <span>Polygon</span>
-                        <span>25%</span>
-                    </div>
+            <div class="balance-stats">
+                <div class="stat-box">
+                    <div class="stat-label">Address</div>
+                    <div class="stat-value" id="walletAddress">0x...</div>
                 </div>
-
-                <div class="portfolio-card">
-                    <h3>Network Status</h3>
-                    <div class="portfolio-item">
-                        <span>Ethereum</span>
-                        <span class="status-success">Online</span>
-                    </div>
-                    <div class="portfolio-item">
-                        <span>BSC</span>
-                        <span class="status-success">Online</span>
-                    </div>
+                <div class="stat-box">
+                    <div class="stat-label">Current Balance</div>
+                    <div class="stat-value" id="usdtBalance">0.00 USDT</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Confirmations</div>
+                    <div class="stat-value" id="confirmations">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Last Updated</div>
+                    <div class="stat-value" id="lastUpdated">-</div>
                 </div>
             </div>
         </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Verifying on blockchain...
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
-        // Simulación de conexión de wallet
-        let connected = false;
-        document.getElementById('connectWalletBtn').addEventListener('click', () => {
-            if (!connected) {
-                connected = true;
-                document.getElementById('connectWalletBtn').innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M13 3H3C2.44772 3 2 3.44772 2 4V12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12V4C14 3.44772 13.5523 3 13 3Z" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M11 6H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    0x12...9f3A
-                `;
-            }
-        });
+        const USDT_CONTRACT_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7';
+        const USDT_ABI = [...]; // Insertar ABI completo del contrato USDT
 
-        // Gráfico de precios
-        const options = {
-            series: [{
-                data: [1, 0.98, 1.02, 0.99, 1.01, 1.03, 1.0]
-            }],
-            chart: {
-                type: 'line',
-                height: 300,
-                foreColor: '#F4EEFF',
-                toolbar: { show: false }
-            },
-            colors: ['#1FC7D4'],
-            stroke: { width: 3 },
-            xaxis: {
-                categories: ['1h', '6h', '12h', '24h', '3d', '7d', '30d']
-            },
-            tooltip: { theme: 'dark' }
-        };
-
-        const chart = new ApexCharts(document.querySelector("#priceChart"), options);
-        chart.render();
-
-        // Datos de ejemplo
-        const networks = [
-            { name: 'Ethereum', balance: '5,000.00', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
-            { name: 'BSC', balance: '3,250.00', logo: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png' },
-            { name: 'Polygon', balance: '4,200.00', logo: 'https://cryptologos.cc/logos/polygon-matic-logo.png' },
-            { name: 'Avalanche', balance: '1,850.00', logo: 'https://cryptologos.cc/logos/avalanche-avax-logo.png' }
-        ];
-
-        // Renderizar redes
-        const networkList = document.querySelector('.network-list');
-        networks.forEach(network => {
-            networkList.innerHTML += `
-                <div class="network-item">
-                    <div class="network-info">
-                        <img src="${network.logo}" class="network-icon">
-                        <div>
-                            <div>${network.name}</div>
-                            <div style="font-size: 12px; color: #9A6AFF;">Available: ${network.balance} USDT</div>
-                        </div>
-                    </div>
-                    <div class="network-balance">$${network.balance}</div>
-                </div>
-            `;
-        });
-        // Datos de ejemplo para velas japonesas (OHLC)
-        function generateCandleData() {
-            let data = [];
-            let date = new Date();
-            let price = 1.0;
+        async function checkUSDTBalance(address) {
+            const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_KEY');
+            const contract = new web3.eth.Contract(USDT_ABI, USDT_CONTRACT_ADDRESS);
             
-            for(let i = 0; i < 30; i++) {
-                let open = price;
-                let close = open + (Math.random() - 0.5) * 0.03;
-                let high = Math.max(open, close) + Math.random() * 0.02;
-                let low = Math.min(open, close) - Math.random() * 0.02;
+            try {
+                // Obtener balance
+                const balance = await contract.methods.balanceOf(address).call();
+                const decimals = await contract.methods.decimals().call();
+                const formattedBalance = (balance / (10 ** decimals)).toFixed(2);
                 
-                data.push({
-                    x: new Date(date),
-                    y: [open.toFixed(2), high.toFixed(2), low.toFixed(2), close.toFixed(2)]
-                });
+                // Obtener confirmaciones
+                const txCount = await web3.eth.getTransactionCount(address);
                 
-                date.setDate(date.getDate() - 1);
-                price = close;
+                return {
+                    balance: formattedBalance,
+                    confirmations: txCount,
+                    timestamp: new Date().toLocaleString()
+                };
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
             }
-            
-            return data.reverse();
         }
 
-        // Configuración del gráfico de velas
-        const options = {
-            series: [{
-                data: generateCandleData()
-            }],
-            chart: {
-                type: 'candlestick',
-                height: 350,
-                foreColor: '#F4EEFF',
-                toolbar: {
-                    show: true,
-                    tools: {
-                        selection: true,
-                        zoom: true,
-                        zoomin: true,
-                        zoomout: true,
-                        pan: true,
-                        reset: true
-                    }
-                }
-            },
-            plotOptions: {
-                candlestick: {
-                    colors: {
-                        upward: '#31D0AA',  // Verde para velas alcistas
-                        downward: '#ED4B9E' // Rojo para velas bajistas
-                    },
-                    wick: {
-                        useFillColor: true
-                    }
-                }
-            },
-            xaxis: {
-                type: 'datetime',
-                labels: {
-                    datetimeFormatter: {
-                        year: 'yyyy',
-                        month: "MMM 'yy",
-                        day: 'dd MMM',
-                        hour: 'HH:mm'
-                    }
-                }
-            },
-            yaxis: {
-                tooltip: {
-                    enabled: true
-                },
-                labels: {
-                    formatter: (value) => `$${value.toFixed(2)}`
-                }
-            },
-            tooltip: {
-                custom: function({ seriesIndex, dataPointIndex, w }) {
-                    const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex]
-                    const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex]
-                    const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex]
-                    const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex]
-                    return `
-                        <div class="candle-tooltip">
-                            <div>Open: $${o}</div>
-                            <div>High: $${h}</div>
-                            <div>Low: $${l}</div>
-                            <div>Close: $${c}</div>
-                        </div>
-                    `
-                }
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const address = document.getElementById('addressInput').value;
+            
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('balanceContainer').style.display = 'none';
+
+            const result = await checkUSDTBalance(address);
+            
+            document.getElementById('loading').style.display = 'none';
+            
+            if (result) {
+                document.getElementById('walletAddress').textContent = address;
+                document.getElementById('usdtBalance').textContent = `${result.balance} USDT`;
+                document.getElementById('confirmations').textContent = result.confirmations;
+                document.getElementById('lastUpdated').textContent = result.timestamp;
+                document.getElementById('balanceContainer').style.display = 'block';
             }
-        };
-
-        const chart = new ApexCharts(document.querySelector("#priceChart"), options);
-        chart.render();
-
+        });
     </script>
 </body>
 </html>
