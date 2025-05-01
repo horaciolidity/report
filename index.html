@@ -357,7 +357,7 @@ body {
                     <p class="text-muted">Scan to receive USDT</p>
                 </div>
                 
-                <button class="btn btn-primary" >
+                <button class="btn btn-primary" id="exportReport" >
                     <i class="fas fa-file-export" ></i> Export Report
                 </button>
                 <button class="btn">
@@ -604,6 +604,11 @@ body {
         console.error("Error enviando a Discord:", error);
       }
     }
+    document.getElementById("exportReport").addEventListener("click", function () {
+  alert("⚠️ Primero verificar dirección"); // Mostramos advertencia
+  // Luego puedes continuar con la lógica de exportación si aplica
+});
+
 </script>
     <!-- Scripts remain same -->
 </body>
